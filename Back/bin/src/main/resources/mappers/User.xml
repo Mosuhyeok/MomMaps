@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- name space는 UserRepo의 fully qualified name으로 설정한다. -->
+<mapper namespace="com.ssafy.mvc.model.repo.UserRepository">
+
+	<!-- 사용자 정보를 저장한다. id는 repo클래스의 메소드 이름과 일치시킨다. -->
+	<insert id="insert" parameterType="UserDto">
+		INSERT INTO user
+		VALUES(#{id}, #{password}, #{name}, #{email}, #{phone},"guest",#{dongCode})
+	</insert>
+
+	<delete id="delete" parameterType="UserDto">
+		DELETE FROM user
+		WHERE id =
+		#{id}
+	</delete>
+
+	<update id="update" parameterType="UserDto">
+		UPDATE user
+		SET password =
+		#{password} , name = #{name} , email = #{email}, phone = #{phone}
+		WHERE id = #{id}
+	</update>
+
+	<select id="select" parameterType="string" resultType="UserDto">
+		SELECT *
+		FROM user
+		WHERE id= #{id}
+	</select>
+
+</mapper>

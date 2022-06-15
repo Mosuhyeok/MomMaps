@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- name space는 UserRepo의 fully qualified name으로 설정한다. -->
+<mapper namespace="com.ssafy.mvc.model.repo.CommentRepository">
+
+	<select id="searchById" resultType="com.ssafy.mvc.dto.CommentDto">
+		select * from comment where id=#{id}
+	</select>
+	
+	<select id="selectAllByPostId" resultType="com.ssafy.mvc.dto.CommentDto">
+	
+		select * from comment where post_id=#{post_id}
+	</select>
+	
+	<insert id="insert">
+		insert into comment (author, content, post_id)
+		values (#{author} , #{content} , #{post_id}) 
+	</insert>
+	<update id="update">
+		update comment
+		set content = #{content}
+		where id = #{id}
+	</update>
+	<delete id="delete">
+		delete from comment where id = #{id}
+	</delete>
+	
+</mapper>

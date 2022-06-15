@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- name space는 UserRepo의 fully qualified name으로 설정한다. -->
+<mapper namespace="com.ssafy.mvc.model.repo.PostRepository">
+
+	<select id="selectById" resultType="com.ssafy.mvc.dto.PostDto">
+		select * from post where id=#{id}
+	</select>
+
+	<select id="getCommentCnt" resultType="Integer">
+		select count(*) from comment where post_id=#{id}
+	</select>
+
+	<select id="selectAll" resultType="com.ssafy.mvc.dto.PostDto">
+		select * from post where type = #{type} order by id desc
+		limit #{page},5
+	</select>
+
+	<insert id="insert">
+		insert into post (author, title, content,view,recommend, type)
+		values (#{author} , #{title} , #{content},#{view},#{recommend},#{type})
+	</insert>
+	<update id="update">
+		update post
+		set title = #{title}, content = #{content}
+		where id=#{id}
+	</update>
+	<update id="view">
+		update post
+		set view = #{view}
+		where id=#{id}
+	</update>
+	<update id="recommend">
+		update post
+		set recommend = #{recommend}
+		where id=#{id}
+	</update>
+	<delete id="delete">
+		delete from post where id = #{id}
+	</delete>
+
+	<select id="searchByAuthor" resultType="com.ssafy.mvc.dto.PostDto">
+		select * from post where author = #{author} and type =#{type}
+	</select>
+	<select id="searchByAuthorAll" resultType="com.ssafy.mvc.dto.PostDto">
+		select * from post where author = #{author}
+	</select>
+
+	<select id="searchByTitle" resultType="com.ssafy.mvc.dto.PostDto">
+		select * from post where title like concat('%',#{title},'%') and type= #{type}
+	</select>
+
+	<select id="getBoardCnt" resultType="Integer">
+		select count(*) as cnt from post where type = #{type}
+	</select>
+
+
+	<select id="selectBest" resultType="com.ssafy.mvc.dto.PostDto">
+		select * from post where recommend >=100 limit #{page},5
+	</select>
+	<select id="getBestBoardCnt" resultType="Integer">
+		select count(*) as cnt from post where recommend >=100
+	</select>
+
+</mapper>

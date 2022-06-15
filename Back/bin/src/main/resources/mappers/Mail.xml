@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.mvc.model.repo.MailRepository">
+	<delete id="delete">
+		delete from mail where email = #{email}
+	</delete>
+
+	<insert id="insert">
+		insert into mail values (#{email},#{value})
+	</insert>
+
+	<select id="select" resultType="com.ssafy.mvc.dto.MailDto">
+
+		select * from mail where email = #{email}
+	</select>
+</mapper>

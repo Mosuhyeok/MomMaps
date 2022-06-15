@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.mvc.model.repo.HouseRepo">
+	<select id="getSido" resultType="SGDcodeDto">
+		select left(sidoCode,2) sidoCode, sidoName
+		from sidocode
+		order by sidoCode
+	</select>
+	
+	<select id="getGugun" resultType="SGDcodeDto">
+		select left(gugunCode,5) gugunCode, gugunName
+		from guguncode
+		where left(gugunCode,2) = #{sido}
+		order by gugunCode
+	</select>
+	
+	<select id="getDong" resultType="SGDcodeDto">
+		select dongCode, dongName
+		from dongcode
+		where left(dongCode,5) = #{gugun}
+		order by dongCode
+	</select>
+	
+	<select id="getHouse" resultType="HouseInfo">
+		select apartmentName, dongCode, dong, buildYear, lat, lng
+		from houseinfo
+		where dongCode = #{dong}
+		order by buildYear
+		limit #{page},5
+	</select>
+	
+	<select id="HouseDetail" resultType="DealInfoDto">
+		select hd.dealAmount, hd.dealYear, hd.dealMonth, hd.dealDay,
+		 	   hd.area, hd.floor, hi.apartmentName as apartmentName, hi.dongCode, 
+		 	   hi.dong, hi.lat, hi.lng, hi.buildYear
+		from housedeal as hd
+		join houseinfo as hi
+		on hd.aptCode = hi.aptCode
+		where hi.apartmentName=#{aptName} and hi.dongCode = #{dong};
+	</select>
+	
+	<select id="getHousecnt" resultType="Integer">
+		select count(*) as cnt
+		from houseinfo
+		where dongCode = #{dong}
+		order by buildYear
+	</select>
+	
+	<select id="getAVG" resultType="ChartDto">
+		select hi.apartmentName as aptName, round(avg(hd.dealAmount*1000+right(hd.dealAmount,3)),0) as Avg
+		from housedeal as hd
+		join houseinfo as hi
+		on hd.aptCode = hi.aptCode
+		where hi.dongCode = #{dong}
+		group by hi.apartmentName
+		order by hi.buildYear;
+	</select>
+	
+	<select id="getHouseAll" resultType="HouseInfo">
+		select apartmentName, dongCode, dong, buildYear, lat, lng
+		from houseinfo
+		where dongCode = #{dong}
+		order by buildYear
+		limit #{page},5
+	</select>
+	
+</mapper>

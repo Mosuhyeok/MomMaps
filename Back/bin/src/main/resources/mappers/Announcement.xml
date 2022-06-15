@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- name space는 UserRepo의 fully qualified name으로 설정한다. -->
+<mapper namespace="com.ssafy.mvc.model.repo.AnnouncementRepo">
+
+	<select id="selectById" resultType="com.ssafy.mvc.dto.AnnouncementDto">
+		select * from announcement where id=#{id}
+	</select>
+
+	<select id="selectAll" resultType="com.ssafy.mvc.dto.AnnouncementDto">
+		select * from announcement order by id desc
+	</select>
+
+	<insert id="insert">
+		insert into announcement (author, title, content)
+		values (#{author} , #{title} , #{content}) 
+	</insert>
+	<update id="update">
+		update announcement
+		set title = #{title}, content = #{content}
+		where id=#{id}
+	</update>
+	<delete id="delete">
+		delete from announcement where id = #{id}
+	</delete>
+
+	<select id="searchByAuthor" resultType="com.ssafy.mvc.dto.PostDto">
+		select * from announcement where author = #{author};
+	</select>
+
+	<select id="searchByTitle" resultType="com.ssafy.mvc.dto.PostDto">
+		select * from announcement where title like concat('%',#{title},'%');
+	</select>
+
+</mapper>

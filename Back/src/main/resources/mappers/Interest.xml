@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- name space는 UserRepo의 fully qualified name으로 설정한다. -->
+<mapper namespace="com.ssafy.mvc.model.repo.InterestRepository">
+
+
+	<insert id="insert">
+		insert into interest (aptCode,apartmentName,dealAmount,dealYear,dealMonth,dealDay,area,floor,userId)
+		values (#{aptCode}, #{apartmentName} , #{dealAmount} , #{dealYear}, #{dealMonth}, #{dealDay}, #{area}, #{floor}, #{userId})
+	</insert>
+
+	<select id="selectById" resultType="com.ssafy.mvc.dto.InterestDto">
+		select * from interest where userId=#{userId}
+	</select>
+
+	<delete id = "remove">
+		delete from interest
+		where apartmentName = #{apartmentName} and dealAmount = #{dealAmount} and dealYear = #{dealYear}
+		  and dealMonth = #{dealMonth} and dealDay = #{dealDay} and area = #{area} and floor = #{floor}
+		  and userId = #{userId}
+	</delete>
+</mapper>
